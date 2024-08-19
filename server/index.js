@@ -74,7 +74,8 @@ opts.secretOrKey = process.env.JWT_SECRET_KEY;
 
 //middlewares
 
-server.use(express.static(path.resolve(__dirname, 'build')));
+// server.use(express.static(path.resolve(__dirname, 'build')));
+server.use(express.static(path.join(__dirname, '../client/build')));
 server.use(cookieParser());
 server.use(
   session({
@@ -104,8 +105,11 @@ server.use('/cart', isAuth(), cartRouter.router);
 server.use('/orders', isAuth(), ordersRouter.router);
 
 // this line we add to make react router work in case of other routes doesnt match
+// server.get('*', (req, res) =>
+//   res.sendFile(path.resolve('build', 'index.html'))
+// ); 
 server.get('*', (req, res) =>
-  res.sendFile(path.resolve('build', 'index.html'))
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 );
 
 // Passport Strategies
